@@ -9,14 +9,19 @@
     "@testing-library/user-event": "^13.5.0",
     "react": "^19.3.1",
     "react-dom": "^19.3.1",
-    "react-scripts": "5.0.1",
-    "web-vitals": "^2.1.4"
+    "react-scripts": "5.0.1"
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "npm run check:data && react-scripts build",
+    "check:data": "node scripts/fetch-exercises.mjs --check",
+    "fetch:data": "node scripts/fetch-exercises.mjs",
+    "lint": "eslint src --ext .js,.ts",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
+  },
+  "devDependencies": {
+    "typescript": "^4.9.5"
   },
   "eslintConfig": {
     "extends": [

@@ -1,70 +1,31 @@
-# Getting Started with Create React App
+# Alok Gym Guide
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A phone-first, single-user gym plan built with the existing Create React App toolchain. No account or tracking.
 
-## Available Scripts
+## Run
 
-In the project directory, you can run:
+```sh
+npm install
+npm start
+```
 
-### `npm start`
+The checked-in catalog and photos are enough to run the app without fetching data. For a production build and offline service worker:
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+```sh
+npm run build
+npx serve -s build
+```
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+The service worker saves the app shell and all plan, cardio, stretch, and beginner photos after the first production load. The full library's remaining photos load from the Free Exercise DB CDN and are cached when viewed. Offline mode requires a secure origin or localhost and an installed service worker.
 
-### `npm test`
+## Edit the guide
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- [Plan](src/data/plan.ts) is the single source for the weekday schedule and lifting prescriptions.
+- [Coach cues](src/data/coach.ts) contains setup, movement, and avoid lines for each plan exercise.
+- [Cardio and stretches](src/data/routines.ts) and [beginner picks](src/data/beginner.ts) control the other default views.
+- `npm run fetch:data` refreshes the [Free Exercise DB](https://github.com/yuhonas/free-exercise-db) catalog, downloads both photos for every default-view ID, and regenerates the media and offline manifests. It fails if a listed ID is absent. The dataset repository declares the [Unlicense](https://github.com/yuhonas/free-exercise-db/blob/main/LICENSE.md). No GIFs are scraped.
+- Add your own `/public/media/<id>.gif` or `.webp`, then run `npm run fetch:data` again. The build-time media manifest gives it priority over the two photos. The `<id>` is the catalog ID, such as `Machine_Bench_Press`.
 
-### `npm run build`
+`npm run check:data`, `npm run lint`, and `CI=true npm test -- --watch=false` verify data, lint, and interaction tests.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+The `Behind_Head_Chest_Stretch` in the requested routine is partner-assisted in the source dataset. Skip that movement if no partner is available.
