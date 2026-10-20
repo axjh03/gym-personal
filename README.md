@@ -22,7 +22,8 @@ The service worker saves the app shell and all plan, cardio, stretch, and beginn
 
 - [Plan](src/data/plan.ts) is the single source for the weekday schedule and lifting prescriptions.
 - [Coach cues](src/data/coach.ts) contains setup, movement, and avoid lines for each plan exercise.
-- [Cardio and stretches](src/data/routines.ts) and [beginner picks](src/data/beginner.ts) control the other default views.
+- Other Library exercises show the catalog's original instructions on their exercise screen.
+- [Cardio and stretches](src/data/routines.ts) control the other views. [The extra offline list](src/data/beginner.ts) selects additional photos to save locally; the Library shows the whole catalog.
 - `npm run fetch:data` refreshes the [Free Exercise DB](https://github.com/yuhonas/free-exercise-db) catalog, downloads both photos for every default-view ID, and regenerates the media and offline manifests. It fails if a listed ID is absent. The dataset repository declares the [Unlicense](https://github.com/yuhonas/free-exercise-db/blob/main/LICENSE.md). No GIFs are scraped.
 - Add your own `/public/media/<id>.gif` or `.webp`, then run `npm run fetch:data` again. The build-time media manifest gives it priority over the two photos. The `<id>` is the catalog ID, such as `Machine_Bench_Press`.
 
