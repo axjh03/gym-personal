@@ -15,6 +15,8 @@ beforeAll(() => {
 test('today plan opens a movement with three short cues', async () => {
   window.location.hash = '#/plan';
   render(<App />);
+  expect(screen.getByRole('heading', { name: 'What to do' })).toBeInTheDocument();
+  expect(screen.getByText(/You cannot choose where fat comes off first/i)).toBeInTheDocument();
   const otherDay = (todayIndex() + 1) % 7;
   const otherRow = screen.getByRole('button', { name: name => name.includes(plan[otherDay].title) });
   fireEvent.click(otherRow);

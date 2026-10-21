@@ -154,10 +154,19 @@ function App() {
       <main className="main-content">
         {tab === 'plan' && <>
           <div className="page-title"><h1>Plan</h1></div>
+          <section className="action-guide" aria-label="What to do">
+            <h2>What to do</h2>
+            <ol>
+              <li><b>Eat:</b> Have protein and fruit or vegetables at each meal. Serve smaller portions and choose water over sugary drinks.</li>
+              <li><b>Lift:</b> Do the scheduled moves. Upper days build chest, back, shoulders, and biceps.</li>
+              <li><b>Cardio:</b> Walk at a pace where you can talk. Start shorter if needed; use a bike if walking hurts your joints.</li>
+            </ol>
+            <p>You cannot choose where fat comes off first. Chest exercises build muscle; overall weight loss reduces fat.</p>
+          </section>
           <div className="section-title"><h2>Weekly plan</h2><span>MON — SUN</span></div>
           <div className="week-list">{plan.map((session, index) => <button type="button" aria-pressed={selectedDay === index} className={`day-row ${index === day ? 'today' : ''} ${index === selectedDay ? 'selected' : ''}`} key={session.day} onClick={() => { setSelectedDay(index); document.getElementById('selected-session')?.scrollIntoView({ behavior: 'smooth', block: 'start' }); }}><span className="day-code">{session.day.toUpperCase()}</span><span className="day-main"><strong>{session.title}</strong><small>{session.focus}</small></span><span className="day-end">{index === day ? <b>TODAY</b> : index === (day + 1) % 7 ? <b className="next-badge">NEXT</b> : null}</span></button>)}</div>
           <div className="section-title session-title" id="selected-session"><div><p className="eyebrow">{selectedDay === day ? 'TODAY' : current.day.toUpperCase()}</p><h2>{current.title}</h2></div><span>{current.exercises.length} MOVES</span></div>
-          {[0, 1, 3, 4].includes(selectedDay) && <p className="session-note">3 sets · 60–90 s rest · stop 2–3 reps before failure</p>}
+          {[0, 1, 3, 4].includes(selectedDay) && <p className="session-note">Use the listed sets · rest 60–90 s · stop with 2–3 reps left. Add a little weight when all sets reach the top of the rep range.</p>}
           <div className="row-list">{current.exercises.map(([id, reps]) => <ItemRow key={id} id={id} detail={reps} onOpen={() => open(id, recommendedIds, current.exercises)} />)}</div>
           {[0, 1, 3, 4].includes(selectedDay) && <div className="finisher"><span>AFTER LIFTING</span><strong>{current.cardio} incline walk</strong><small>Easy enough to speak in full sentences.</small></div>}
           <div className="section-title options-title"><h2>Other recommended</h2><span>{current.alternatives.length} MORE · 10 TOTAL</span></div>
@@ -175,7 +184,7 @@ function App() {
           <div className="section-title"><h2>Machines</h2></div>
           <div className="machine-list">{cardio.map((machine, index) => <div className="machine" key={machine.id}><Demo id={machine.id} eager /><div className="machine-copy"><div className="machine-heading"><span>0{index + 1}</span><h3>{machine.label}</h3></div><p>{machine.detail}</p><ul>{machine.cues.map(cue => <li key={cue}>{cue}</li>)}</ul><button type="button" onClick={() => open(machine.id, cardio.map(x => x.id))}>View demo ↗</button></div></div>)}</div>
           <div className="section-title"><h2>12-week ramp</h2></div>
-          <div className="ramp"><div><b>WK 1–2</b><span>Incline walk · 35–45 min</span></div><div><b>WK 3–4</b><span>Add 1 min easy jog every 3 min</span></div><div><b>WK 5–8</b><span>2 min jog / 2 min walk × 8–10; bike or elliptical once a week</span></div><div><b>WK 9–12</b><span>3 min jog / 1 min walk, or 25–30 min steady</span></div></div>
+          <div className="ramp"><div><b>WK 1–2</b><span>Easy walk or bike; start shorter if needed</span></div><div><b>WK 3–4</b><span>Build toward the walk times in your plan</span></div><div><b>WK 5–8</b><span>Keep walking; try bike or elliptical once a week</span></div><div><b>WK 9–12</b><span>Keep the talkable pace; jogging is optional</span></div></div>
           <p className="safety">Sharp joint pain? Stop and switch machine.</p>
         </>}
         {tab === 'library' && <>

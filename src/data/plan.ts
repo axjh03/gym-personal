@@ -1,8 +1,9 @@
 export const plan = [
-  { day: 'Mon', title: 'Upper body · chest & back', focus: 'Chest · back · shoulders · arms', group: 'upper', cardio: '25–30 min', alternatives: ['Butterfly', 'Face_Pull', 'Dip_Machine', 'Incline_Push-Up'], exercises: [
+  { day: 'Mon', title: 'Upper body · chest & back', focus: 'Chest · back · shoulders · arms', group: 'upper', cardio: '25–30 min', alternatives: ['Butterfly', 'Face_Pull', 'Incline_Push-Up'], exercises: [
     ['Machine_Bench_Press', '3 × 10–12'], ['Wide-Grip_Lat_Pulldown', '3 × 10–12'],
-    ['Machine_Shoulder_Military_Press', '3 × 10–12'], ['Seated_Cable_Rows', '3 × 10–12'],
-    ['Standing_Biceps_Cable_Curl', '3 × 12–15'], ['Triceps_Pushdown_-_Rope_Attachment', '3 × 12–15']
+    ['Machine_Shoulder_Military_Press', '2 × 10–12'], ['Seated_Cable_Rows', '2 × 10–12'],
+    ['Cable_Seated_Lateral_Raise', '2 × 12–15'], ['Standing_Biceps_Cable_Curl', '3 × 10–15'],
+    ['Triceps_Pushdown_-_Rope_Attachment', '2 × 10–15']
   ] },
   { day: 'Tue', title: 'Lower body · legs & abs', focus: 'Quads · hamstrings · calves · core', group: 'lower', cardio: '25–30 min', alternatives: ['Seated_Calf_Raise', 'Standing_Calf_Raises', 'Bodyweight_Squat', 'Reverse_Crunch'], exercises: [
     ['Leg_Press', '3 × 10–12'], ['Seated_Leg_Curl', '3 × 10–12'], ['Leg_Extensions', '3 × 10–12'],
@@ -11,11 +12,11 @@ export const plan = [
   { day: 'Wed', title: 'Easy cardio & mobility', focus: 'Easy effort · move well', group: 'recovery', cardio: '35–45 min', alternatives: ['Recumbent_Bike', 'Elliptical_Trainer', 'Arm_Circles', 'Standing_Hip_Circles', 'Shoulder_Stretch', 'Hamstring_Stretch'], exercises: [
     ['Walking_Treadmill', '35–45 min'], ['Cat_Stretch', '30 s'], ['Childs_Pose', '30 s'], ['Kneeling_Hip_Flexor', '30 s / side']
   ] },
-  { day: 'Thu', title: 'Upper body · shoulders & arms', focus: 'Upper chest · back · delts · arms', group: 'upper', cardio: '25–30 min', alternatives: ['Face_Pull', 'Dip_Machine', 'Hammer_Curls'], exercises: [
+  { day: 'Thu', title: 'Upper body · shoulders & arms', focus: 'Upper chest · back · delts · arms', group: 'upper', cardio: '25–30 min', alternatives: ['Face_Pull', 'Butterfly', 'Dip_Machine'], exercises: [
     ['Leverage_Incline_Chest_Press', '3 × 10–12'], ['Close-Grip_Front_Lat_Pulldown', '3 × 10–12'],
-    ['Reverse_Machine_Flyes', '3 × 10–12'], ['Cable_Seated_Lateral_Raise', '3 × 10–12'],
-    ['Machine_Preacher_Curls', '3 × 12–15'], ['Cable_Rope_Overhead_Triceps_Extension', '3 × 12–15'],
-    ['Ab_Crunch_Machine', '3 × 10–12']
+    ['Reverse_Machine_Flyes', '2 × 12–15'], ['Cable_Seated_Lateral_Raise', '2 × 12–15'],
+    ['Machine_Preacher_Curls', '3 × 10–15'], ['Hammer_Curls', '2 × 10–15'],
+    ['Cable_Rope_Overhead_Triceps_Extension', '2 × 10–15']
   ] },
   { day: 'Fri', title: 'Lower body · glutes & core', focus: 'Quads · glutes · hamstrings · core', group: 'lower', cardio: '25–30 min', alternatives: ['Glute_Kickback', 'Single_Leg_Glute_Bridge', 'Seated_Calf_Raise', 'Crunches'], exercises: [
     ['Hack_Squat', '3 × 10–12'], ['Seated_Leg_Curl', '3 × 10–12'], ['Butt_Lift_Bridge', '3 × 10–12'],

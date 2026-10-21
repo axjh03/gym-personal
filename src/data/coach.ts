@@ -20,6 +20,7 @@ export const coach = {
   Reverse_Machine_Flyes: ['Chest against pad; handles at shoulder height', 'Open arms wide; squeeze upper back, return slowly', 'Shrugging or throwing weight back'],
   Cable_Seated_Lateral_Raise: ['Sit leaning forward; crossed low cables pass under knees', 'Raise upper arms to shoulder height; lower slowly', 'Swinging torso or straightening elbows'],
   Machine_Preacher_Curls: ['Upper arms on pad; align elbows with pivot', 'Curl smoothly; lower for 3 sec', 'Lifting arms off pad or snapping elbows'],
+  Hammer_Curls: ['Stand tall; dumbbells at sides, palms facing in', 'Curl with elbows still; pause, lower slowly', 'Swinging your torso or moving elbows forward'],
   Cable_Rope_Overhead_Triceps_Extension: ['Face away from pulley; elbows near ears', 'Straighten arms overhead; bend back slowly', 'Flaring elbows or arching lower back'],
   Ab_Crunch_Machine: ['Adjust seat; feet planted, ribs over pelvis', 'Curl torso down; pause 1 sec', 'Yanking handles or pulling with arms'],
   Hack_Squat: ['Shoulders under pads; feet shoulder-width on platform', 'Bend knees comfortably; press through whole foot', 'Knees collapsing inward or hips lifting'],

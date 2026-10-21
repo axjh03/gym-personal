@@ -2,6 +2,8 @@
 
 A phone-first, single-user gym plan built with the existing Create React App toolchain. No account or tracking.
 
+The Plan tab gives direct food, lifting, and cardio actions. Its upper days emphasize chest, lats, side shoulders, and biceps while the lower days and low-impact cardio remain in place. This draws on [Hamza Ahmed's aesthetic-body video](https://www.youtube.com/watch?v=Fv29vf29YIw), [Renaissance Periodization's four-day aesthetic training video](https://www.youtube.com/watch?v=tIsE3jLz5zI), and [ACSM's 2026 resistance-training guidance](https://www.acsm.org/wp-content/uploads/2026/03/Resistance-Training-Position-Stand-infographic.pdf). The food and activity advice follows [CDC weight-loss guidance](https://www.cdc.gov/healthy-weight-growth/losing-weight/index.html). Given the stated fat-loss priority, this guide pairs lifting with a modest calorie deficit rather than a bulk-first phase.
+
 ## Run
 
 ```sh

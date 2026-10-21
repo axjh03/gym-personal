@@ -23,3 +23,10 @@ test('each day has ten distinct recommendations with local photos', () => {
     }
   }
 });
+
+test('upper days train chest, lats, side shoulders, and biceps', () => {
+  const monday = plan[0].exercises.map(([id]) => id);
+  const thursday = plan[3].exercises.map(([id]) => id);
+  expect(monday).toEqual(expect.arrayContaining(['Machine_Bench_Press', 'Wide-Grip_Lat_Pulldown', 'Cable_Seated_Lateral_Raise', 'Standing_Biceps_Cable_Curl']));
+  expect(thursday).toEqual(expect.arrayContaining(['Leverage_Incline_Chest_Press', 'Close-Grip_Front_Lat_Pulldown', 'Cable_Seated_Lateral_Raise', 'Machine_Preacher_Curls', 'Hammer_Curls']));
+});
