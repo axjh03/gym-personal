@@ -20,7 +20,7 @@ The service worker saves the app shell and all plan, cardio, stretch, and beginn
 
 ## Edit the guide
 
-- [Plan](src/data/plan.ts) is the single source for the weekday schedule and lifting prescriptions.
+- [Plan](src/data/plan.ts) is the single source for the weekday schedule, lifting prescriptions, and optional exercise picks. Each day shows its scheduled workout first, then enough optional picks to make ten recommendations, followed by paginated exercises matching that day's focus.
 - [Coach cues](src/data/coach.ts) contains setup, movement, and avoid lines for each plan exercise.
 - Other Library exercises show the catalog's original instructions on their exercise screen.
 - [Cardio and stretches](src/data/routines.ts) control the other views. [The extra offline list](src/data/beginner.ts) selects additional photos to save locally; the Library shows the whole catalog.

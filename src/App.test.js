@@ -20,6 +20,10 @@ test('today plan opens a movement with three short cues', async () => {
   fireEvent.click(otherRow);
   expect(otherRow).toHaveAttribute('aria-pressed', 'true');
   expect(screen.getByText('TODAY')).toBeInTheDocument();
+  expect(screen.getByText('Other recommended')).toBeInTheDocument();
+  expect(screen.getByText(/10 TOTAL/)).toBeInTheDocument();
+  expect(screen.getByText('All matching exercises')).toBeInTheDocument();
+  expect(screen.getByRole('button', { name: /^Show \d+ exercises ↓$/ })).toBeInTheDocument();
   const [id] = plan[otherDay].exercises[0];
   const name = catalog.find(exercise => exercise.id === id).name;
   expect(screen.getByText('Weekly plan')).toBeInTheDocument();
@@ -35,6 +39,13 @@ test('today plan opens a movement with three short cues', async () => {
   fireEvent.touchStart(screen.getByText('EXERCISE'), { touches: [{ clientY: 40 }] });
   fireEvent.touchEnd(screen.getByText('EXERCISE'), { changedTouches: [{ clientY: 180 }] });
   expect(await screen.findByText('Weekly plan')).toBeInTheDocument();
+});
+
+test('all matching exercises can be expanded', () => {
+  window.location.hash = '#/plan';
+  render(<App />);
+  fireEvent.click(screen.getByRole('button', { name: /^Show \d+ exercises ↓$/ }));
+  expect(screen.getByRole('button', { name: 'Show more ↓' })).toBeInTheDocument();
 });
 
 test('library searches all movements and shows source instructions', async () => {

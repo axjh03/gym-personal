@@ -10,6 +10,15 @@ const byId = Object.fromEntries(catalog.map(exercise => [exercise.id, exercise])
 const library = [...catalog].sort((a, b) => Number(!!media[b.id]?.frames?.[0]?.startsWith('/exercises/')) - Number(!!media[a.id]?.frames?.[0]?.startsWith('/exercises/')));
 const equipmentNames = ['Machines', 'Cables', 'Dumbbells', 'Barbells', 'Bodyweight', 'Kettlebells', 'Bands', 'Ball & Foam roller', 'Cardio machines', 'Stretching'];
 const muscleNames = ['Chest', 'Back', 'Shoulders', 'Biceps', 'Triceps', 'Forearms', 'Abs', 'Quads', 'Hamstrings', 'Glutes', 'Calves'];
+const sessionMuscles = {
+  upper: new Set(['chest', 'lats', 'middle back', 'lower back', 'shoulders', 'biceps', 'triceps', 'forearms', 'traps']),
+  lower: new Set(['quadriceps', 'hamstrings', 'glutes', 'calves', 'abdominals'])
+};
+
+function matchesSession(exercise, group) {
+  if (group === 'recovery') return exercise.category === 'cardio' || exercise.category === 'stretching';
+  return exercise.category === 'strength' && exercise.primaryMuscles?.some(muscle => sessionMuscles[group].has(muscle));
+}
 
 function equipmentGroup(exercise) {
   if (exercise.category === 'stretching') return 'Stretching';
@@ -79,9 +88,9 @@ function Demo({ id, large = false, eager = false }) {
   </button>;
 }
 
-function ItemRow({ id, detail, onOpen }) {
+function ItemRow({ id, detail, onOpen, eager = true }) {
   const name = byId[id]?.name || id;
-  return <div className="item-row"><Demo id={id} eager /><button className="item-text" type="button" onClick={onOpen}><strong>{name}</strong><span>{detail}</span></button><button className="row-arrow" type="button" aria-label={`Open ${name}`} onClick={onOpen}>›</button></div>;
+  return <div className="item-row"><Demo id={id} eager={eager} /><button className="item-text" type="button" onClick={onOpen}><strong>{name}</strong><span>{detail}</span></button><button className="row-arrow" type="button" aria-label={`Open ${name}`} onClick={onOpen}>›</button></div>;
 }
 
 function App() {
@@ -96,7 +105,10 @@ function App() {
   const [equipment, setEquipment] = useState('');
   const [muscle, setMuscle] = useState('');
   const [limit, setLimit] = useState(30);
+  const [planLimit, setPlanLimit] = useState(20);
+  const [showDayOptions, setShowDayOptions] = useState(false);
   useEffect(() => setSelectedDay(day), [day]);
+  useEffect(() => { setPlanLimit(20); setShowDayOptions(false); }, [selectedDay]);
   useEffect(() => {
     const update = () => {
       const next = window.location.hash || '#/plan';
@@ -113,6 +125,13 @@ function App() {
   const open = (id, ids, detail = null) => { setList(ids); setPlanDetail(detail); window.location.hash = `#/ex/${encodeURIComponent(id)}`; };
   const current = plan[selectedDay];
   const currentIds = current.exercises.map(([id]) => id);
+  const recommendedIds = [...currentIds, ...current.alternatives];
+  const dayOptions = useMemo(() => {
+    const session = plan[selectedDay];
+    const recommended = new Set([...session.exercises.map(([id]) => id), ...session.alternatives]);
+    return library.filter(exercise => matchesSession(exercise, session.group) && !recommended.has(exercise.id));
+  }, [selectedDay]);
+  const dayOptionIds = dayOptions.map(exercise => exercise.id);
   const filtered = useMemo(() => library.filter(exercise =>
     (!equipment || equipmentGroup(exercise) === equipment) && muscleMatches(exercise, muscle) &&
     (!search || `${exercise.name} ${exercise.id}`.toLowerCase().includes(search.trim().toLowerCase()))
@@ -139,8 +158,17 @@ function App() {
           <div className="week-list">{plan.map((session, index) => <button type="button" aria-pressed={selectedDay === index} className={`day-row ${index === day ? 'today' : ''} ${index === selectedDay ? 'selected' : ''}`} key={session.day} onClick={() => { setSelectedDay(index); document.getElementById('selected-session')?.scrollIntoView({ behavior: 'smooth', block: 'start' }); }}><span className="day-code">{session.day.toUpperCase()}</span><span className="day-main"><strong>{session.title}</strong><small>{session.focus}</small></span><span className="day-end">{index === day ? <b>TODAY</b> : index === (day + 1) % 7 ? <b className="next-badge">NEXT</b> : null}</span></button>)}</div>
           <div className="section-title session-title" id="selected-session"><div><p className="eyebrow">{selectedDay === day ? 'TODAY' : current.day.toUpperCase()}</p><h2>{current.title}</h2></div><span>{current.exercises.length} MOVES</span></div>
           {[0, 1, 3, 4].includes(selectedDay) && <p className="session-note">3 sets · 60–90 s rest · stop 2–3 reps before failure</p>}
-          <div className="row-list">{current.exercises.map(([id, reps]) => <ItemRow key={id} id={id} detail={reps} onOpen={() => open(id, currentIds, current.exercises)} />)}</div>
+          <div className="row-list">{current.exercises.map(([id, reps]) => <ItemRow key={id} id={id} detail={reps} onOpen={() => open(id, recommendedIds, current.exercises)} />)}</div>
           {[0, 1, 3, 4].includes(selectedDay) && <div className="finisher"><span>AFTER LIFTING</span><strong>{current.cardio} incline walk</strong><small>Easy enough to speak in full sentences.</small></div>}
+          <div className="section-title options-title"><h2>Other recommended</h2><span>{current.alternatives.length} MORE · 10 TOTAL</span></div>
+          <p className="session-note">{selectedDay === 6 ? 'Optional ideas; rest is enough.' : 'Alternatives to the workout, not extra exercises.'}</p>
+          <div className="row-list">{current.alternatives.map(id => <ItemRow key={id} id={id} detail="Optional" onOpen={() => open(id, recommendedIds, current.exercises)} />)}</div>
+          <div className="section-title options-title"><h2>All matching exercises</h2><span>{dayOptions.length} MORE</span></div>
+          {showDayOptions ? <>
+            <div className="row-list">{dayOptions.slice(0, planLimit).map(exercise => <ItemRow key={exercise.id} id={exercise.id} detail={equipmentGroup(exercise)} eager={false} onOpen={() => open(exercise.id, dayOptionIds)} />)}</div>
+            {dayOptions.length > planLimit && <button className="more-button" type="button" onClick={() => setPlanLimit(planLimit + 20)}>Show more ↓</button>}
+          </> : <button className="more-button" type="button" onClick={() => setShowDayOptions(true)}>Show {dayOptions.length} exercises ↓</button>}
+          <a className="browse-link" href="#/library">Browse all {catalog.length} exercises →</a>
         </>}
         {tab === 'cardio' && <>
           <div className="page-title"><h1>Cardio</h1><p>Talk test: full sentences · effort 4–5/10</p></div>

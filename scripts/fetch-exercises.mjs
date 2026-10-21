@@ -15,10 +15,10 @@ async function source(name) {
   return import(`data:text/javascript,${encodeURIComponent(code)}`);
 }
 
-const [{ planIds }, { beginnerIds }, { cardio, stretches }, { coach }] = await Promise.all([
+const [{ planIds, planOptionIds }, { beginnerIds }, { cardio, stretches }, { coach }] = await Promise.all([
   source('plan.ts'), source('beginner.ts'), source('routines.ts'), source('coach.ts')
 ]);
-const requiredIds = [...new Set([...planIds, ...beginnerIds, ...cardio.map(x => x.id), ...stretches.flatMap(x => x.items.map(([id]) => id))])];
+const requiredIds = [...new Set([...planIds, ...planOptionIds, ...beginnerIds, ...cardio.map(x => x.id), ...stretches.flatMap(x => x.items.map(([id]) => id))])];
 const exists = path => access(path).then(() => true, () => false);
 
 if (process.argv.includes('--check')) {
